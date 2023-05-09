@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.models import User
 
 urlpatterns = [
     path("", views.myfunctioncall, name="index"),
     path("gp", views.gp, name="gp"),
     ######
+    path("registro/", views.registro, name="registro"),
+    ###
     path("about", views.myfunctionabout, name="about"),
     path("add/<int:a>/<int:b>", views.add, name="add"),
     path("intro/<str:name>/<int:age>", views.intro, name="intro"),

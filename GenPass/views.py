@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from .forms import *
 from .utils import generate_password
@@ -13,6 +14,7 @@ def myfunctioncall(request):
     return render(request, "index.html")
 
 
+## Main proyect
 def gp(request):
     length = int(request.GET.get("length", 16))
     include_uppercase = request.GET.get("uppercase"), True
@@ -20,6 +22,37 @@ def gp(request):
     password = generate_password(length, include_uppercase, include_numbers)
     mydictionary = {"password": password}
     return render(request, "index.html", context=mydictionary)
+
+
+## Registro
+def registro(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        firstname = request.POST["first_name"]
+        lastname = request.POST["last_name"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
+
+        # Validar que la contraseña coincida con la confirmación de la contraseña
+        if password != confirm_password:
+            return render(
+                request, "registro.html", {"error": "Las contraseñas no coinciden"}
+            )
+
+        # Crear un nuevo usuario
+        user = User.objects.create_user(
+            username=username,
+            firstname=firstname,
+            lastname=lastname,
+            email=email,
+            password=password,
+        )
+        user.save()
+
+        return redirect("/index.html")
+    else:
+        return render(request, "registro.html")
 
 
 def myfunctionabout(request):
