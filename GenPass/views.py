@@ -1,8 +1,11 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from .forms import *
 from .utils import generate_password
+
+# User
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -52,7 +55,28 @@ def registro(request):
 
         return redirect("/index.html")
     else:
-        return render(request, "registro.html")
+        return render(request, "user/registro.html")
+
+
+## Login
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("index")
+        else:
+            return render(request, "user/login.html", {"error": "Invalid credentials"})
+    else:
+        return render(request, "user/login.html")
+
+
+## Logout
+def logout_view(request):
+    logout(request)
+    return redirect("index")
 
 
 def myfunctionabout(request):
