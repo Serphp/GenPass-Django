@@ -3,6 +3,9 @@ from django.http import HttpResponse, JsonResponse
 from .forms import *
 from .utils import generate_password
 
+# db
+from django.db import IntegrityError
+
 # User
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -44,14 +47,21 @@ def registro(request):
             )
 
         # Crear un nuevo usuario
-        user = User.objects.create_user(
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            password=password,
-        )
-        user.save()
+        try:
+            user = User.objects.create_user(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password=password,
+            )
+            user.save()
+        except IntegrityError:
+            return render(
+                request,
+                "registro.html",
+                {"error": "El correo electrónico ya está registrado"},
+            )
 
         # Autenticar y hacer login del nuevo usuario
         new_user = authenticate(username=username, password=password)
