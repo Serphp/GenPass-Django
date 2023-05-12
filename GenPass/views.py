@@ -31,8 +31,8 @@ def gp(request):
 def registro(request):
     if request.method == "POST":
         username = request.POST["username"]
-        firstname = request.POST["first_name"]
-        lastname = request.POST["last_name"]
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         email = request.POST["email"]
         password = request.POST["password"]
         confirm_password = request.POST["confirm_password"]
@@ -46,14 +46,18 @@ def registro(request):
         # Crear un nuevo usuario
         user = User.objects.create_user(
             username=username,
-            firstname=firstname,
-            lastname=lastname,
+            first_name=first_name,
+            last_name=last_name,
             email=email,
             password=password,
         )
         user.save()
 
-        return redirect("/index.html")
+        # Autenticar y hacer login del nuevo usuario
+        new_user = authenticate(username=username, password=password)
+        login(request, new_user)
+
+        return redirect("/")
     else:
         return render(request, "user/registro.html")
 
