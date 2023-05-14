@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from .forms import *
 from .utils import generate_password
+from django.shortcuts import render, get_object_or_404
 
 # db
 from django.db import IntegrityError
@@ -118,49 +119,17 @@ def myimagepage5(request, imagename):
     return render(request, "imagepage5.html", context=mydictionary)
 
 
-def myform(request):
-    return render(request, "myform.html")
+# View Profile Page (User) and Other Users
 
 
-def submitmyform(request):
-    mydictionary = {
-        "var1": request.POST["mytext"],
-        "var2": request.POST["mytextarea"],
-        "method": request.method,
-    }
-    return JsonResponse(mydictionary)
+def profile(request, username):
+    if request.user.username == username:
+        # si se está accediendo al perfil propio
+        user = request.user
+    else:
+        # si se está accediendo al perfil de otro usuario
+        user = get_object_or_404(User, username=username)
 
+    context = {"user": user}
+    return render(request, "user/profile.html", context)
 
-def myform2(request):
-    if request.method == "POST":
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            title = request.POST["title"]
-            subject = request.POST["subject"]
-            email = request.POST["email"]
-            mydictionary = {"form": FeedbackForm()}
-            errorflag = False
-            Errors = []
-            if title != title.upper():
-                errorflag = True
-                errormsg = "Title should be in Capital"
-                Errors.append(errormsg)
-            import re
-
-            regex = "^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-            if not re.search(regex, email):
-                errorflag = True
-                errormsg = "Not a Valid Email address"
-                Errors.append(errormsg)
-            if errorflag != True:
-                mydictionary["success"] = True
-                mydictionary["successmsg"] = "Form Submitted"
-            mydictionary["error"] = errorflag
-            mydictionary["errors"] = Errors
-            print(mydictionary)
-            return render(request, "myform2.html", context=mydictionary)
-
-    elif request.method == "GET":
-        form = FeedbackForm()  # FeedbackForm(None)
-        mydictionary = {"form": form}
-        return render(request, "myform2.html", context=mydictionary)

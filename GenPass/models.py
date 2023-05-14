@@ -8,6 +8,13 @@ from django.contrib.auth.models import (
 )
 
 
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="products")
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class User(AbstractUser):
     # Otros campos de usuario aquí
     username = models.CharField(max_length=50, unique=True)
@@ -25,6 +32,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
+
     # Campos de usuario personalizados aquí
 
 

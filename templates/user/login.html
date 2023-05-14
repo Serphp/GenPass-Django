@@ -1,17 +1,26 @@
 {% extends 'index.html' %}
 
 {% block content %}
-  <h1>Login</h1>
   {% if error %}
     <p>{{ error }}</p>
   {% endif %}
   <form method="post">
     {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" name="username" required><br>
-    <label for="password">Password:</label>
-    <input type="password" name="password" required><br>
-    {% comment %} <input type="hidden" name="next" value="{{ next }}"> {% endcomment %}
-    <input type="submit" value="Login">
+    <section class="container">
+        <h1 class="text-center">Login</h1>
+        <div class="form-row">
+    
+            <div class="col-sm-4 form-group">
+                <input type="text" class="form-control" name="username" placeholder='username' required>
+            </div> 
+            <div class="col-sm-4 form-group">
+                <input name="password" type="password" class="form-control" placeholder='password'>
+            </div>
+            <div class="form-group col-12">
+                <button class="btn btn-primary btn-block"> Login </button>
+            </div>
+        </div>
+    </section>
   </form>
+
 {% endblock %}
