@@ -42,7 +42,7 @@
                     <a class="nav-link" href="/admin"> Admin </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/registro"> Registro </a>
+                    <a class="nav-link" href="/servicios"> servicos </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,10 +88,10 @@
 
     <div class="container">
 
-    {% if user.is_authenticated %}
+    {% comment %} {% if user.is_authenticated %}
     <h1>Generador de contraseñas</h1>
     {% include 'includes/gp.html' %}
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     </div>
 

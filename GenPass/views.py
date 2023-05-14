@@ -17,6 +17,11 @@ def error_404_view(request, exception):
     return render(request, "404.html")
 
 
+## Static page
+def servicios(request):
+    return render(request, "servicios.html")
+
+
 def myfunctioncall(request):
     return render(request, "index.html")
 
@@ -132,4 +137,3 @@ def profile(request, username):
 
     context = {"user": user}
     return render(request, "user/profile.html", context)
-
