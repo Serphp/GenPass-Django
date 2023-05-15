@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     ##
+    "sass_processor",
+    ##
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -132,3 +134,21 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
+]
+
+STATICFILES_PROCESSORS = [
+    "sass_processor.processors.css",
+]
+
+SASS_PROCESSOR_ENABLED = True
+
+# Directorio donde se encuentran los archivos .scss
+SASS_PROCESSOR_ROOT = "static/scss"
+
+# Directorio donde se guardarán los archivos .css compilados
+SASS_PROCESSOR_OUTPUT_DIR = "static/css"

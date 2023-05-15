@@ -9,26 +9,52 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'style/global.css' %}"> 
+    <link rel="stylesheet" href="{% static 'style/index.css' %}">
 
     <title>{% block title %}My First Page{% endblock %}</title>
   </head>
-  <body>
-    <nav class="navbar navbar-light bg-light">
-      <div class="container">
-          <a class="navbar-brand" href="#">
-              <img src="assets/imgs/logo.svg" alt="">
-          </a>
-          <div class="socials">
-              <a href="javascript:void(0)"><i class="ti-facebook"> H </i></a>
-              <a href="javascript:void(0)"><i class="ti-twitter"></i></a>
-              <a href="javascript:void(0)"><i class="ti-pinterest-alt"></i></a>
-              <a href="javascript:void(0)"><i class="ti-instagram"></i></a>
-              <a href="javascript:void(0)"><i class="ti-youtube"></i></a>
-          </div>
-      </div>
-  </nav>
+  <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
-  <nav class="navbar custom-navbar navbar-expand-md navbar-light bg-primary sticky-top">
+
+    <nav id="scrollspy" class="navbar navbar-light bg-light navbar-expand-lg fixed-top" data-spy="affix" data-offset-top="20">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="assets/imgs/brand.svg" alt="" class="brand-img"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/servicios">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="navbar-nav ml-auto ml-0 ml-lg-4">
+                        {% if user.is_authenticated %}
+                        <div class="nav-link">Welcome, {{ user.username }}!</div>
+                        <a href="/profile/{{ user.username }}" class="ml-4 btn btn-dark mt-1 btn-sm">Mi profile</a>
+                        <form action="{% url 'logout' %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="ml-4 btn btn-dark mt-1 btn-sm">Logout</button>
+                        </form>
+                        {% else %}
+                        <a href="/login" class="ml-4 btn btn-dark mt-1 btn-sm">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+  {% comment %} <nav class="navbar custom-navbar navbar-expand-md navbar-light bg-primary sticky-top">
     <div class="container">
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -61,7 +87,6 @@
             </ul>
             <div class="navbar-nav ml-auto">
                 <li class="login">
-                    {% comment %} <a href="components.html" class="ml-4 btn btn-dark mt-1 btn-sm">Sign In</a> {% endcomment %}
                       {% if user.is_authenticated %}
                       <div>Welcome, {{ user.username }}!</div>
                       <a href="/profile/{{ user.username }}" class="ml-4 btn btn-dark mt-1 btn-sm">Mi profile</a>
@@ -77,26 +102,151 @@
             </div>
         </div>
     </div>
-</nav>
+</nav> {% endcomment %}
       {% block content %}
 
-    <header class="page-header"></header>
+    {% comment %} <header class="page-header">
+        <div class="headerindex"> 
+            <div class="page-header title"> AUMENTEMOS LAS VENTAS DE
+                <div class="subtitle"> SU NEGOCIO </div>
+            </div>
+        </div>
+    </header> {% endcomment %}
+
+    <header id="home" class="header">
+        <div class="overlay"></div>
+
+        <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">  
+            <div class="container">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 class="carousel-title">We Make<br> Creative Design</h1>
+                            <a class="btnsomos">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 class="carousel-title">We Make <br> Responsive Design</h1>
+                            <button class="btnsomos">Learn More</button>
+                          </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 class="carousel-title">We Make <br> Simple Design</h1>
+                            <button class="btnsomos">Learn More</button>
+                          </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+
+        <div class="infos container mb-4 mb-md-2">
+            <div class="title">
+                <h6 class="subtitle font-weight-normal">Are locking for</h6>
+                <h5>Lorem inpsum</h5>
+                <p class="font-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            </div>
+            <div class="socials text-right">
+                <div class="row justify-content-between">
+                    <div class="col">
+                        <a class="d-block subtitle"><i class="ti-microphone pr-2"></i> (507) 66xx31xx</a>
+                        <a class="d-block subtitle"><i class="ti-email pr-2"></i> info@website.com</a>
+                    </div>
+                    <div class="col">
+                        <h6 class="subtitle font-weight-normal mb-2">Social Media</h6>
+                        <div class="social-links">
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-facebook"></i></a>
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-twitter-alt"></i></a>
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-google"></i></a>
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-pinterest-alt"></i></a>
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-instagram"></i></a>
+                            <a href="javascript:void(0)" class="link pr-1"><i class="ti-rss"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
     {% include 'includes/news.html' %}
 
-    <div class="container mt-5">
+    <section class="container">
+    <div class="contenedortitle">
+    <div class="titlesomos">
+        
+    Llegue a un mercado más amplio, venda sus productos o servicios mientras usted duerme.
+    Brindamos soluciones integrales para empresas y profesionales, de ese modo aumentarán sus ventas, la fidelidad de sus clientes y un mayor retorno de los mismos.
+    Asesoría, desarrollo e implementación de planes de negocios, canales de ventas digitales, tiendas web, estrategia publicitaria, creación y generación de contenido.
+    </div>
+        <img src="https://images.unsplash.com/photo-1683014121668-db007fc22e85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=719&q=80" 
+        class="imgsomos"
+        alt="serphp" />
+    </div>
 
-    <div class="container">
+    <section class="section" id="about">
+
+        <div class="container">
+
+            <div class="row align-items-center mr-auto">
+                <div class="col-md-4">
+                    <h6 class="xs-font mb-0">nobis dolorem sapiente evenie.</h6>
+                    <h3 class="section-title">About Us</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum sunt, unde aperiam aliquid quia repudiandae, ex harum quis amet delectus maxime, tempora possimus aut laboriosam magni corrupti labore. Doloremque, sit?</p>
+
+                    <a href="javascript:void(0)">Read more...</a>
+                </div>
+                <div class="col-sm-6 col-md-4 ml-auto">
+                    <div class="widget">
+                        <div class="icon-wrapper">
+                            <i class="ti-calendar"></i>
+                        </div>
+                        <div class="infos-wrapper">
+                            <h4 class="text-primary">15+</h4>
+                            <p>onsectetur perspiciatis</p>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <div class="icon-wrapper">
+                            <i class="ti-face-smile"></i>
+                        </div>
+                        <div class="infos-wrapper">
+                            <h4 class="text-primary">125+</h4>
+                            <p>onsectetur perspiciatis</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="widget">
+                        <div class="icon-wrapper">
+                            <i class="ti-star"></i>
+                        </div>
+                        <div class="infos-wrapper">
+                            <h4 class="text-primary">3434+</h4>
+                            <p>onsectetur perspiciatis</p>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <div class="icon-wrapper">
+                            <i class="ti-user"></i>
+                        </div>
+                        <div class="infos-wrapper">
+                            <h4 class="text-primary">80+</h4>
+                            <p>onsectetur perspiciatis</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
 
     {% comment %} {% if user.is_authenticated %}
     <h1>Generador de contraseñas</h1>
     {% include 'includes/gp.html' %}
     {% endif %} {% endcomment %}
-
-    </div>
+    </section>
 
     {% endblock %}
-
 
 
     <!-- Optional JavaScript -->
