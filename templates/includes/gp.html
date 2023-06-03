@@ -2,35 +2,17 @@
 <form method="GET" action="{% url 'gp' %}" id="password-form">
   {% csrf_token %}
 
-  <p>Su nueva contraseña es: {{ password }}</p>
-  <label for="length">Longitud:</label>
+  <p>Su nueva contraseña es: </p>
+  <h2> {{ password }} </h2>
+  <label for="length" class="text-muted">Longitud:</label>
   <input type="number" name="length" id="length" min="8" max="64" value="16">
   <br>
-  <label for="include_uppercase">Incluir mayúsculas:</label>
+  <label for="include_uppercase" class="text-muted">Incluir mayúsculas:</label>
   <input type="checkbox" name="include_uppercase" id="include_uppercase" checked>
   <br>
-  <label for="include_numbers">Incluir números:</label>
+  <label for="include_numbers" class="text-muted">Incluir números:</label>
   <input type="checkbox" name="include_numbers" id="include_numbers" checked>
   <br>
-  <button type="submit" id="generate-password">Generar contraseña</button>
+  <button type="submit" class="btn btn-primary" style="margin: 1rem auto 0 auto;display: block;" id="generate-password">Generar contraseña</button>
+  {% comment %} <button id="generate-password-btn">Generar contraseña 2</button> {% endcomment %}
 </form>
-
-<script>
-$(document).ready(function() {
-$('#generate-password').click(function(e) {
-  e.preventDefault(); // Detener el comportamiento por defecto del botón
-  $.ajax({
-    url: $('#password-form').attr('action'),
-    type: 'POST',
-    data: $('#password-form').serialize(),
-    success: function(response) {
-      // Actualizar el contenido de la página con la nueva contraseña generada
-      $('#password-result').html(response.password);
-    },
-    error: function() {
-      alert('Error al generar contraseña');
-    }
-  });
-});
-});  
-</script>

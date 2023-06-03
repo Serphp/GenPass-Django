@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block title %} Convert {% endblock %}
+{% block content %}
+
+<header class="page-header page-header-mini">
+    <h1 class="headertitle"> Convert </h1>
+</header>
+
+{% if output_path %}
+<h1>Resultado de la conversión</h1>
+<p>El archivo ha sido convertido exitosamente.</p>
+<a href="{{ output_path }}" download>Descargar el archivo SVG</a>
+{% else %}
+<h1>Cargar archivo PNG para convertir a SVG</h1>
+<form method="post" enctype="multipart/form-data" action="/convert">
+    {% csrf_token %}
+    <input type="file" name="image" accept=".png">
+    <button type="submit">Convertir</button>
+</form>
+{% endif %}
+
+
+{% endblock %}

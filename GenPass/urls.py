@@ -14,7 +14,9 @@ urlpatterns = [
     # path('<str:username>/', OtherProfileView.as_view(), name='other_profile'),
     ###
     path("servicios", views.servicios, name="servicios"),
+    path("convert", views.convert, name="convert"),
     path("about", views.myfunctionabout, name="about"),
+    path("myform2", views.genpass, name="myform2"),
     ###
     path("add/<int:a>/<int:b>", views.add, name="add"),
     path("intro/<str:name>/<int:age>", views.intro, name="intro"),

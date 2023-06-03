@@ -486,8 +486,8 @@ pre code {
 
 .container {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  /* padding-right: 15px;
+  padding-left: 15px; */
   margin-right: auto;
   margin-left: auto;
 }
@@ -9054,6 +9054,8 @@ textarea.form-control {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   padding: 20px;
+}
+
   .titlesomos {
     width: 70%;
     display: flex;
@@ -9069,14 +9071,29 @@ textarea.form-control {
   height: 400px;
   }
 
-  // .btnsomos {
-  // //background-color: #000;
-  // padding: 30px;
-  // font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-  // //color: #000;
-  // }
+.mb-5 {
+  margin-top: 3rem !important;
 }
 
+  .btnsomos {
+    width: 200px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btnsomos:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
 
 
 .subtitle {
@@ -9164,20 +9181,12 @@ textarea.form-control {
 }
 
 .page-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .page-container .page-content {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .page-container .page-sidebar {

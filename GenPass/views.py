@@ -22,18 +22,43 @@ def servicios(request):
     return render(request, "servicios.html")
 
 
+from PIL import Image
+import os
+import tempfile
+from django.core.files.storage import default_storage
+from django.conf import settings
+
+
+def convert(request):
+    if request.method == "POST":
+        if "image" in request.FILES:
+            # Obtener el archivo cargado desde el formulario
+            uploaded_file = request.FILES["image"]
+
+            # Guardar el archivo temporalmente
+            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:
+                temp_path = temp_file.name
+                default_storage.save(temp_path, uploaded_file.name)
+
+            # Realizar la conversión de PNG a SVG
+            output_path = os.path.join(settings.MEDIA_ROOT, "converted.svg")
+            img = Image.open(temp_path)
+            img.save(output_path, "SVG")
+
+            # Eliminar el archivo temporal
+            os.remove(temp_path)
+
+            # Renderizar la plantilla con el resultado de la conversión
+            return render(request, "convert.html", {"output_path": output_path})
+
+    return render(request, "convert.html")
+
+
 def myfunctioncall(request):
     return render(request, "index.html")
 
 
 ## Main proyect
-def gp(request):
-    length = int(request.GET.get("length", 16))
-    include_uppercase = request.GET.get("uppercase"), True
-    include_numbers = request.GET.get("numbers"), True
-    password = generate_password(length, include_uppercase, include_numbers)
-    mydictionary = {"password": password}
-    return render(request, "index.html", context=mydictionary)
 
 
 ## Registro
@@ -137,3 +162,44 @@ def profile(request, username):
 
     context = {"user": user}
     return render(request, "user/profile.html", context)
+
+
+# myform2 GenPass
+
+
+def gp(request: any):
+    length = int(request.GET.get("length", 16))
+    include_uppercase = request.GET.get("uppercase"), True
+    include_numbers = request.GET.get("numbers"), True
+    password = generate_password(length, include_uppercase, include_numbers)
+    mydictionary = {"password": password}
+    return render(request, "myform2.html", context=mydictionary)
+
+
+def genpass(request):
+    # if request.method == "POST":
+    #     form = gp(request.POST)
+    #     if form.is_valid():
+    #         length = form.cleaned_data["length"]
+    #         include_uppercase = form.cleaned_data["include_uppercase"]
+    #         include_numbers = form.cleaned_data["include_numbers"]
+    #         password = generate_password(length, include_uppercase, include_numbers)
+    #         mydictionary = {"password": password, "form": form}
+    #     return render(request, "myform2.html", context=mydictionary)
+    return render(request, "myform2.html")
+
+
+# def genpass(request):
+# if request.method == "POST":
+#     form = genpass(request.POST)
+#     if form.is_valid():
+#         length = form.cleaned_data["length"]
+#         include_uppercase = form.cleaned_data["include_uppercase"]
+#         include_numbers = form.cleaned_data["include_numbers"]
+#         password = generate_password(length, include_uppercase, include_numbers)
+#         mydictionary = {"password": password, "form": form}
+#         return render(request, "myform2.html", context=mydictionary)
+# else:
+#     form = gp()
+#     mydictionary = {"form": form}
+#     return render(request, "myform2.html", context=mydictionary)
